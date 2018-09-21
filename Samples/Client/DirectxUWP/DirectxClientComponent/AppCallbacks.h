@@ -38,6 +38,10 @@ namespace DirectXClientComponent
 
 		uint32 FpsReport();
 
+	protected:
+
+		void OnKeyPressed(CoreWindow^ sender, KeyEventArgs^ args);
+
 	private:
 		void SendInputData();
 

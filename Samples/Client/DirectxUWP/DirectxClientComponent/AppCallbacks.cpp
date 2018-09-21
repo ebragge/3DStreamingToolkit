@@ -42,6 +42,10 @@ void AppCallbacks::Initialize(CoreApplicationView^ appView)
 
 void AppCallbacks::SetWindow(CoreWindow^ window)
 {
+	// Register for keypress notifications.
+	window->KeyDown +=
+		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &AppCallbacks::OnKeyPressed);
+
 	// Create a holographic space for the core window for the current view.
 	// Presenting holographic frames that are created by this holographic
 	// space will put the app into exclusive mode.
@@ -248,6 +252,27 @@ void AppCallbacks::SendInputData()
 #ifdef SHOW_DEBUG_INFO
 	g_currentTimestamp = newFrame->CurrentPrediction->Timestamp->TargetTime.UniversalTime;
 #endif // SHOW_DEBUG_INFO
+
+	m_sendInputDataHandler(msg);
+}
+
+// Input event handlers
+
+void AppCallbacks::OnKeyPressed(CoreWindow^ sender, KeyEventArgs^ args)
+{
+	//
+	// TODO: Bluetooth keyboards are supported by HoloLens. You can use this method for
+	//       keyboard input if you want to support it as an optional input method for
+	//       your holographic app.
+	//
+	int code = (int)(args->VirtualKey);
+	m_videoRenderer->SetKeyCode(code);
+
+	String^ msg =
+		"{" +
+		"  \"type\":\"input-key-code\"," +
+		"  \"body\":\"" + code.ToString() + "\"" +
+		"}";
 
 	m_sendInputDataHandler(msg);
 }

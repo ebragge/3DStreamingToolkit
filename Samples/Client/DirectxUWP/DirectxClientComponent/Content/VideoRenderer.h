@@ -4,7 +4,7 @@
 #include "ShaderStructures.h"
 
 //#define SHOW_DEBUG_INFO
-//#define UNITY_UV_STARTS_AT_TOP
+#define UNITY_UV_STARTS_AT_TOP
 
 using namespace Microsoft::WRL;
 
@@ -27,7 +27,11 @@ namespace DirectXClientComponent
 		Windows::Foundation::Numerics::float3		GetFocusPoint()			{ return m_focusPoint;			}
 		void SetFocusPoint(Windows::Foundation::Numerics::float3 pos)		{ m_focusPoint = pos;			}
 
+		void SetKeyCode(int code) { m_keyCode = code; }
+
 	private:
+		int m_keyCode;
+
 		std::shared_ptr<DX::DeviceResources>		m_deviceResources;
 		int											m_width;
 		int											m_height;

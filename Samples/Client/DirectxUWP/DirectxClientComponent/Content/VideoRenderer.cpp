@@ -22,6 +22,7 @@ VideoRenderer::VideoRenderer(
 {
 	// Sets a fixed focus point two meters in front of user for image stabilization.
 	m_focusPoint = { 0.0f, 0.0f, -2.0f };
+	m_keyCode = 0;
 
 #ifdef SHOW_DEBUG_INFO
 	// Creates text format.
@@ -269,7 +270,7 @@ void VideoRenderer::ReleaseDeviceDependentResources()
 void VideoRenderer::Render(int fps, int latency)
 {
 #ifdef SHOW_DEBUG_INFO
-	String^ debugInfo = L"FPS: " + fps + L" Latency: " + latency;
+	String^ debugInfo = L"FPS: " + fps + L" Latency: " + latency + L" Key: " + m_keyCode.ToString();
 	int halfWidth = m_width >> 1;
 
 	D2D1_RECT_F leftTextRect = 
